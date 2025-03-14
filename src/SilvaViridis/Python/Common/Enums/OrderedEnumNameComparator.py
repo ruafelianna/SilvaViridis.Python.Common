@@ -1,0 +1,3 @@
+from .OrderedEnumPropertyComparator import OrderedEnumPropertyComparator
+
+OrderedEnumNameComparator = OrderedEnumPropertyComparator('name')
