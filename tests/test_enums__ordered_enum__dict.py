@@ -5,7 +5,7 @@ from typing import (
     Callable,
 )
 
-from src.SilvaViridis.Python.Common.Enums import (
+from SilvaViridis.Python.Common.Enums import (
     OrderedEnum,
     OrderedEnumDictComparator,
 )
