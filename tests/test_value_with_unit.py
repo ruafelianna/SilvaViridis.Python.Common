@@ -38,16 +38,16 @@ def test_str(
     assert str(value) == expected
 
 @pytest.mark.parametrize("value,expected", [
-    (VwU(1024, SizeUnit.b), hash("1024")),
-    (VwU(1024, SizeUnit.kb), hash("1024k")),
-    (VwU(1024, SizeUnit.mb), hash("1024m")),
-    (VwU(1024, SizeUnit.gb), hash("1024g")),
+    (VwU(1024, SizeUnit.b), (1024, SizeUnit.b)),
+    (VwU(1024, SizeUnit.kb), (1024, SizeUnit.kb)),
+    (VwU(1024, SizeUnit.mb), (1024, SizeUnit.mb)),
+    (VwU(1024, SizeUnit.gb), (1024, SizeUnit.gb)),
 ])
 def test_hash(
     value : VwU[IComparable, SizeUnit],
-    expected : str,
+    expected : tuple[int, SizeUnit],
 ):
-    assert hash(value) == expected
+    assert hash(value) == hash(expected)
 
 @pytest.mark.parametrize("unit", [
     SizeUnit.b,

@@ -34,7 +34,7 @@ class ValueWithUnit[TValue : IComparable, TUnit : OrderedEnum]:
     def __hash__(
         self,
     ) -> int:
-        return hash(str(self))
+        return hash((self._value, self._unit))
 
     def __eq__(
         self,
