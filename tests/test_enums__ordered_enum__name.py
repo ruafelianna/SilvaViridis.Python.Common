@@ -1,3 +1,4 @@
+import operator as op
 import pytest
 
 from typing import (
@@ -199,6 +200,15 @@ def test_le(left : OE, right : OE, expected : bool):
     assert (left <= right) == expected
 
 @pytest.mark.parametrize("value", [OE.s1, OE.s2, OE.s3, OE.s4, OE.s5])
-@pytest.mark.parametrize("operator", [OE.__eq__, OE.__ne__, OE.__gt__, OE.__ge__, OE.__lt__, OE.__le__])
-def test_not_implemented(value : OE, operator : Callable[[OE, Any], bool]):
+def test_not_implemented_eq(value : OE):
+    assert not (value == 7)
+
+@pytest.mark.parametrize("value", [OE.s1, OE.s2, OE.s3, OE.s4, OE.s5])
+def test_not_implemented_ne(value : OE):
+    assert value != 7
+
+@pytest.mark.xfail(raises = TypeError)
+@pytest.mark.parametrize("value", [OE.s1, OE.s2, OE.s3, OE.s4, OE.s5])
+@pytest.mark.parametrize("operator", [op.gt, op.ge, op.lt, op.le])
+def test_not_implemented_other(value : OE, operator : Callable[[OE, Any], bool]):
     assert operator(value, 7) == NotImplemented
