@@ -4,7 +4,7 @@
 
 * `TEnum` is `OrderedEnum` or one of it's heirs;
 * the keys of the dictionary are of `TEnum` type;
-* the values of the dictionary are of `int` type.
+* the values of the dictionary are of [`IComparable`](../Interfaces/IComparable.md) type.
 
 #### Example:
 

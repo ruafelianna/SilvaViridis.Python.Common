@@ -2,9 +2,10 @@ from typing import Callable
 
 from .OrderedEnum import OrderedEnum
 from .OrderedEnumComparator import OrderedEnumComparator
+from ..Interfaces import IComparable
 
 def OrderedEnumDictComparator[TEnum : OrderedEnum](
-    order : dict[TEnum, int],
+    order : dict[TEnum, IComparable],
 ) -> Callable[[type[TEnum]], type[TEnum]]:
     def compare(
         self : TEnum,
