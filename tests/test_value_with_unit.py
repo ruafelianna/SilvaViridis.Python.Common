@@ -1,6 +1,7 @@
 import operator as op
 import pytest
 
+from itertools import product
 from typing import Any, Callable
 
 from SilvaViridis.Python.Common import ValueWithUnit as VwU
@@ -24,64 +25,63 @@ order = {
     SizeUnit.gb: 3,
 }
 
-SizeUnit = OrderedEnumDictComparator(order)(SizeUnit)
+OrderedEnumDictComparator(order)(SizeUnit)
 
-@pytest.mark.parametrize("value,expected", [
-    (VwU(1024, SizeUnit.b), "1024"),
-    (VwU(1024, SizeUnit.kb), "1024k"),
-    (VwU(1024, SizeUnit.mb), "1024m"),
-    (VwU(1024, SizeUnit.gb), "1024g"),
-])
+OE_value_pairs = [(1, 1), (1, 2), (2, 1)]
+OE_units = list(SizeUnit)
+OE_unit_pairs = product(OE_units, repeat = 2)
+OE_operators = [op.eq, op.ne, op.gt, op.ge, op.lt, op.le]
+OE_checks : list[Callable[[VwU[IComparable, SizeUnit], VwU[IComparable, SizeUnit]], bool]] = [
+    lambda x, y: (x.unit == y.unit) and (x.value == y.value),
+    lambda x, y: (x.unit != y.unit) or (x.value != y.value),
+    lambda x, y: (x.unit > y.unit) or ((x.unit == y.unit) and (x.value > y.value)),
+    lambda x, y: (x.unit > y.unit) or ((x.unit == y.unit) and (x.value >= y.value)),
+    lambda x, y: (x.unit < y.unit) or ((x.unit == y.unit) and (x.value < y.value)),
+    lambda x, y: (x.unit < y.unit) or ((x.unit == y.unit) and (x.value <= y.value)),
+]
+OE_operators_dict = {x[0]: x[1] for x in zip(OE_operators, OE_checks)}
+
+@pytest.mark.parametrize("v1,v2", OE_value_pairs)
+@pytest.mark.parametrize("u1,u2", OE_unit_pairs)
+@pytest.mark.parametrize("operator", OE_operators)
+def test_op(
+    v1 : IComparable, v2 : IComparable,
+    u1 : SizeUnit, u2 : SizeUnit,
+    operator : Callable[[Any, Any], bool]
+):
+    left = VwU(v1, u1)
+    right = VwU(v2, u2)
+    assert operator(left, right) == OE_operators_dict[operator](left, right)
+
+@pytest.mark.parametrize("unit", OE_units)
 def test_str(
-    value : VwU[IComparable, SizeUnit],
-    expected : str,
+    unit : SizeUnit,
 ):
-    assert str(value) == expected
+    assert str(VwU(1024, unit)) == f"1024{unit.value}"
 
-@pytest.mark.parametrize("value,expected", [
-    (VwU(1024, SizeUnit.b), (1024, SizeUnit.b)),
-    (VwU(1024, SizeUnit.kb), (1024, SizeUnit.kb)),
-    (VwU(1024, SizeUnit.mb), (1024, SizeUnit.mb)),
-    (VwU(1024, SizeUnit.gb), (1024, SizeUnit.gb)),
-])
+@pytest.mark.parametrize("unit", OE_units)
 def test_hash(
-    value : VwU[IComparable, SizeUnit],
-    expected : tuple[int, SizeUnit],
+    unit : SizeUnit,
 ):
-    assert hash(value) == hash(expected)
+    assert hash(VwU(1024, unit)) == hash((1024, unit))
 
-@pytest.mark.parametrize("unit", [
-    SizeUnit.b,
-    SizeUnit.kb,
-    SizeUnit.mb,
-    SizeUnit.gb
-])
+@pytest.mark.parametrize("unit", OE_units)
 def test_not_implemented_eq(
     unit : SizeUnit,
 ):
     assert not (VwU(7, unit) == 7)
 
-@pytest.mark.parametrize("unit", [
-    SizeUnit.b,
-    SizeUnit.kb,
-    SizeUnit.mb,
-    SizeUnit.gb
-])
+@pytest.mark.parametrize("unit", OE_units)
 def test_not_implemented_ne(
     unit : SizeUnit,
 ):
     assert VwU(7, unit) != 7
 
 @pytest.mark.xfail(raises = TypeError)
-@pytest.mark.parametrize("unit", [
-    SizeUnit.b,
-    SizeUnit.kb,
-    SizeUnit.mb,
-    SizeUnit.gb
-])
-@pytest.mark.parametrize("operator", [op.gt, op.ge, op.lt, op.le])
+@pytest.mark.parametrize("unit", OE_units)
+@pytest.mark.parametrize("operator", OE_operators[2:])
 def test_not_implemented_other(
     unit : SizeUnit,
-    operator : Callable[[VwU[int, SizeUnit], Any], bool],
+    operator : Callable[[Any, Any], bool],
 ):
-    assert operator(VwU(7, unit), 7) == NotImplemented
+    assert operator(VwU(7, unit), 7)
