@@ -8,7 +8,6 @@ from SilvaViridis.Python.Common.Enums import (
     OrderedEnumDictComparator,
 )
 
-@OrderedEnumDictComparator(lambda: order)
 class SizeUnit(OrderedEnum):
     b = ""
     kb = "k"
@@ -21,6 +20,8 @@ order = {
     SizeUnit.mb: 2,
     SizeUnit.gb: 3,
 }
+
+SizeUnit = OrderedEnumDictComparator(order)(SizeUnit)
 
 @pytest.mark.parametrize("left,right,expected", [
     (VwU(1, SizeUnit.b), VwU(1, SizeUnit.b), True),

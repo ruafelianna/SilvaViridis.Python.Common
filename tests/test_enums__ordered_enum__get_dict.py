@@ -8,9 +8,10 @@ from typing import (
 
 from SilvaViridis.Python.Common.Enums import (
     OrderedEnum,
-    OrderedEnumDictComparator,
+    OrderedEnumGetDictComparator,
 )
 
+@OrderedEnumGetDictComparator(lambda: order)
 class OE(OrderedEnum):
     s1 = "str1"
     s2 = "str3"
@@ -26,8 +27,6 @@ order = {
     OE.s4: 1,
     OE.s5: 3,
 }
-
-OE = OrderedEnumDictComparator(order)(OE)
 
 @pytest.mark.parametrize("left,right,expected", [
     (OE.s1, OE.s1, True),
