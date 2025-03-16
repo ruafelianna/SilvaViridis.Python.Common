@@ -11,4 +11,6 @@ using `Enum`'s properties `name` and `value`:
 * [`name` property comparator](OrderedEnumNameComparator.md)
 * [`value` property comparator](OrderedEnumValueComparator.md)
 
-[Back](OrderedEnum.md)
+[To OrderedEnum](OrderedEnum.md)
+
+[To Index](../index.md)

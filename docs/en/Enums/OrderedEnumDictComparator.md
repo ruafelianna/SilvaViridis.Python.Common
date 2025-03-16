@@ -14,13 +14,16 @@ from SilvaViridis.Python.Common.Enums import (
     OrderedEnumDictComparator,
 )
 
-@OrderedEnumDictComparator(lambda: {
-    SomeEnum.Fruit1: 0,
-    SomeEnum.Fruit2: 1,
-})
 class SomeEnum(OrderedEnum):
     Fruit1 = "orange"
     Fruit2 = "apple"
+
+order = {
+    SomeEnum.Fruit1: 0,
+    SomeEnum.Fruit2: 1,
+}
+
+OrderedEnumDictComparator(order)(SomeEnum)
 ```
 
 ```
@@ -28,4 +31,6 @@ class SomeEnum(OrderedEnum):
 False
 ```
 
-[Back](OrderedEnum.md)
+[To OrderedEnum](OrderedEnum.md)
+
+[To Index](../index.md)

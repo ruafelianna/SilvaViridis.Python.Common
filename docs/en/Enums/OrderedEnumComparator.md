@@ -6,4 +6,6 @@ where `TEnum` is `OrderedEnum` or one of it's heirs.
 
 Other decorators described in this documentation use `OrderedEnumComparator`.
 
-[Back](OrderedEnum.md)
+[To OrderedEnum](OrderedEnum.md)
+
+[To Index](../index.md)

@@ -22,4 +22,6 @@ class SomeEnum(OrderedEnum):
 False
 ```
 
-[Back](OrderedEnumPropertyComparator.md)
+[To OrderedEnumPropertyComparator](OrderedEnumPropertyComparator.md)
+
+[To Index](../index.md)
