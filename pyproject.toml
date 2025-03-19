@@ -1,6 +1,6 @@
 [project]
 name = "SilvaViridis.Python.Common"
-version = "0.4.1"
+version = "0.5.0"
 description = "Useful tools for python projects."
 authors = [
     {name = "Maria Sorokina", email = "ruafelianna@ya.ru"},
