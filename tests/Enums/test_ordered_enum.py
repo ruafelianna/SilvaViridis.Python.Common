@@ -31,7 +31,7 @@ class comparator_type(Enum):
 
 def create_comparator(t : comparator_type) -> tuple[type[OrderedEnum], Callable[[str], IComparable]]:
     oe = OrderedEnum("OrderedEnumTest", OE_values_dict)
-    order = {getattr(oe, k): v for k, v in OE_order_dict.items()}
+    order : dict[oe, IComparable] = {getattr(oe, k): v for k, v in OE_order_dict.items()}
     order_func : Callable[[str], IComparable]
 
     if t is comparator_type.dict:
