@@ -1,8 +1,6 @@
-from typing import Sequence
-
 from .MimeType import MimeType
 
-MimeTypeExtensions : dict[MimeType, Sequence[str]] = {
+MimeTypeExtensions : dict[MimeType, list[str]] = {
     MimeType.audio__midi: ["mid", "midi", "kar"],
     MimeType.audio__mpeg: ["mp3"],
     MimeType.audio__ogg: ["ogg"],

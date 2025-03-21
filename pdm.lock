@@ -5,10 +5,21 @@
 groups = ["default", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:12a2da8f3aee724d05065f0f6f0c5c6dacbf994916c54399bdad7f89cad85008"
+content_hash = "sha256:d69bf70f2a1bc4a51db931bb304340e07dd9c2b757d0c06503d40ddf36e6e3f8"
 
 [[metadata.targets]]
 requires_python = ">=3.13"
+
+[[package]]
+name = "beartype"
+version = "0.20.1"
+requires_python = ">=3.9"
+summary = "Unbearably fast near-real-time hybrid runtime-static type-checking in pure Python."
+groups = ["default"]
+files = [
+    {file = "beartype-0.20.1-py3-none-any.whl", hash = "sha256:0355a795c216d9205f8fe53f33dcc26629295586fa8705562ca74ef997ef7c7f"},
+    {file = "beartype-0.20.1.tar.gz", hash = "sha256:7f3127735832a61f7b623654976ba4829f9f02fd7d6d88458b09065f4f842078"},
+]
 
 [[package]]
 name = "colorama"

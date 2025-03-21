@@ -1,11 +1,11 @@
 [project]
 name = "SilvaViridis.Python.Common"
-version = "0.5.1"
+version = "0.6.0"
 description = "Useful tools for python projects."
 authors = [
     {name = "Maria Sorokina", email = "ruafelianna@ya.ru"},
 ]
-dependencies = []
+dependencies = ["beartype>=0.20.1"]
 requires-python = ">=3.13"
 readme = "README.md"
 license = {text = "MIT"}
