@@ -1,6 +1,7 @@
 import pytest
 
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 from SilvaViridis.Python.Common.Text import StringHelper as SH
 

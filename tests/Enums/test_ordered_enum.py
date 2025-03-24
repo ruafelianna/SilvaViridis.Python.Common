@@ -1,9 +1,10 @@
 import operator as op
 import pytest
 
+from collections.abc import Callable, Mapping
 from enum import Enum
 from itertools import product
-from typing import Any, Callable
+from typing import Any
 
 from SilvaViridis.Python.Common.Interfaces import IComparable
 
@@ -31,7 +32,7 @@ class comparator_type(Enum):
 
 def create_comparator(t : comparator_type) -> tuple[type[OrderedEnum], Callable[[str], IComparable]]:
     oe = OrderedEnum("OrderedEnumTest", OE_values_dict)
-    order : dict[oe, IComparable] = {getattr(oe, k): v for k, v in OE_order_dict.items()}
+    order : Mapping[oe, IComparable] = {getattr(oe, k): v for k, v in OE_order_dict.items()}
     order_func : Callable[[str], IComparable]
 
     if t is comparator_type.dict:

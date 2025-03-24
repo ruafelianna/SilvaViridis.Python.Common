@@ -1,6 +1,6 @@
 import pytest
 
-from typing import Callable
+from collections.abc import Callable
 
 from SilvaViridis.Python.Common.Web import HttpStatus, HttpStatusGroup
 

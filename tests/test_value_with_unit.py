@@ -1,8 +1,9 @@
 import operator as op
 import pytest
 
+from collections.abc import Callable
 from itertools import product
-from typing import Any, Callable
+from typing import Any
 
 from SilvaViridis.Python.Common import ValueWithUnit as VwU
 from SilvaViridis.Python.Common.Interfaces import IComparable

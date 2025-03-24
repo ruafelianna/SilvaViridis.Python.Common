@@ -1,5 +1,6 @@
+from collections.abc import Callable
 from functools import total_ordering
-from typing import Any, Callable
+from typing import Any
 
 from .OrderedEnum import OrderedEnum
 
