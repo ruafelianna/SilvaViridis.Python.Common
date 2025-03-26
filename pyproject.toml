@@ -5,7 +5,9 @@ description = "Useful tools for python projects."
 authors = [
     {name = "Maria Sorokina", email = "ruafelianna@ya.ru"},
 ]
-dependencies = ["beartype>=0.20.1"]
+dependencies = [
+    "beartype>=0.20",
+]
 requires-python = ">=3.13"
 readme = "README.md"
 license = {text = "MIT"}
@@ -18,4 +20,32 @@ build-backend = "pdm.backend"
 distribution = true
 
 [tool.pdm.dev-dependencies]
-test = ["pytest>=8.3.5", "coverage>=7.6.12"]
+test = [
+    "pytest>=8.3",
+    "pytest-custom_exit_code>=0.3",
+    "coverage>=7.7",
+    "pyright>=1.1",
+]
+
+[tool.pdm.scripts]
+clean = """
+sh -c ' \\
+    rm -rf .pdm-build dist .pytest_cache .coverage htmlcov \\
+    ; find . -type d -name __pycache__ -exec rm -rf {} + \\
+'
+"""
+build = """
+sh -c ' \\
+    pdm install -d \\
+    && pdm run pyright \\
+    && pdm run pytest --suppress-no-test-exit-code \\
+    && pdm build \\
+'
+"""
+test = """
+sh -c ' \\
+    pdm run coverage run -m pytest -s \\
+    && pdm run coverage html \\
+'\\
+"""
+update_lock = "pdm lock -G:all"
