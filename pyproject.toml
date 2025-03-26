@@ -1,6 +1,6 @@
 [project]
 name = "SilvaViridis.Python.Common"
-version = "0.7.0"
+version = "0.7.1"
 description = "Useful tools for python projects."
 authors = [
     {name = "Maria Sorokina", email = "ruafelianna@ya.ru"},
@@ -18,6 +18,9 @@ build-backend = "pdm.backend"
 
 [tool.pdm]
 distribution = true
+build.includes = [
+    "src/SilvaViridis/Python",
+]
 
 [tool.pdm.dev-dependencies]
 test = [
