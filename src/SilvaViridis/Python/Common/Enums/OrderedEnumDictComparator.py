@@ -1,11 +1,13 @@
 from collections.abc import Callable, Mapping
+from pydantic import validate_call
 
 from .OrderedEnum import OrderedEnum
 from .OrderedEnumComparator import OrderedEnumComparator
-from ..Interfaces import IComparable
+from ..Interfaces import IComparableTypeHint
 
+@validate_call
 def OrderedEnumDictComparator[TEnum : OrderedEnum](
-    order : Mapping[TEnum, IComparable],
+    order : Mapping[TEnum, IComparableTypeHint],
 ) -> Callable[[type[TEnum]], type[TEnum]]:
     def compare(
         self : TEnum,

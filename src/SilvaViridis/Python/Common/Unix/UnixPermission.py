@@ -1,8 +1,10 @@
 from functools import reduce
+from pydantic import validate_call
 
 from .Permission import Permission
 
 class UnixPermission:
+    @validate_call
     def __init__(
         self,
         owner : Permission,
@@ -31,11 +33,13 @@ class UnixPermission:
     ) -> Permission:
         return self._other
 
+    @validate_call
     def as_octal(
         self,
     ) -> str:
         return f"{self.owner.value}{self.group.value}{self.other.value}"
 
+    @validate_call
     def as_chmod(
         self,
         turn_on : bool = True,
@@ -53,6 +57,7 @@ class UnixPermission:
         return f"{result[0]}{sign}{result[1].name}"
 
     @staticmethod
+    @validate_call
     def _get_permission(
         user_group : str,
         permission : Permission,
@@ -62,6 +67,7 @@ class UnixPermission:
         return (user_group, permission)
 
     @staticmethod
+    @validate_call
     def _sum(
         acc : tuple[str, Permission],
         elem : tuple[str, Permission],

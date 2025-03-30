@@ -1,0 +1,29 @@
+MIN_INT_8 = -2**7
+MAX_INT_8 = 2**7 - 1
+
+MIN_INT_16 = -2**15
+MAX_INT_16 = 2**15 - 1
+
+MIN_INT_32 = -2**31
+MAX_INT_32 = 2**31 - 1
+
+MIN_INT_64 = -2**63
+MAX_INT_64 = 2**63 - 1
+
+MIN_INT_128 = -2**127
+MAX_INT_128 = 2**127 - 1
+
+MIN_UINT_8 = 0
+MAX_UINT_8 = 2**8 - 1
+
+MIN_UINT_16 = 0
+MAX_UINT_16 = 2**16 - 1
+
+MIN_UINT_32 = 0
+MAX_UINT_32 = 2**32 - 1
+
+MIN_UINT_64 = 0
+MAX_UINT_64 = 2**64 - 1
+
+MIN_UINT_128 = 0
+MAX_UINT_128 = 2**128 - 1

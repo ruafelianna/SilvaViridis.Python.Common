@@ -2,10 +2,10 @@ from functools import total_ordering
 from typing import Any
 
 from .Enums import OrderedEnum
-from .Interfaces import IComparable
+from .Interfaces import IComparableTypeHint
 
 @total_ordering
-class ValueWithUnit[TValue : IComparable, TUnit : OrderedEnum]:
+class ValueWithUnit[TValue : IComparableTypeHint, TUnit : OrderedEnum]:
     def __init__(
         self,
         value : TValue,

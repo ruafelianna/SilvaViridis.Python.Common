@@ -6,7 +6,7 @@ from itertools import product
 from typing import Any
 
 from SilvaViridis.Python.Common import ValueWithUnit as VwU
-from SilvaViridis.Python.Common.Interfaces import IComparable
+from SilvaViridis.Python.Common.Interfaces import IComparableTypeHint
 
 from SilvaViridis.Python.Common.Enums import (
     OrderedEnum,
@@ -32,7 +32,7 @@ OE_value_pairs = [(1, 1), (1, 2), (2, 1)]
 OE_units = list(SizeUnit)
 OE_unit_pairs = product(OE_units, repeat = 2)
 OE_operators = [op.eq, op.ne, op.gt, op.ge, op.lt, op.le]
-OE_checks : list[Callable[[VwU[IComparable, SizeUnit], VwU[IComparable, SizeUnit]], bool]] = [
+OE_checks : list[Callable[[VwU[IComparableTypeHint, SizeUnit], VwU[IComparableTypeHint, SizeUnit]], bool]] = [
     lambda x, y: (x.unit == y.unit) and (x.value == y.value),
     lambda x, y: (x.unit != y.unit) or (x.value != y.value),
     lambda x, y: (x.unit > y.unit) or ((x.unit == y.unit) and (x.value > y.value)),
@@ -46,7 +46,7 @@ OE_operators_dict = {x[0]: x[1] for x in zip(OE_operators, OE_checks)}
 @pytest.mark.parametrize("u1,u2", OE_unit_pairs)
 @pytest.mark.parametrize("operator", OE_operators)
 def test_op(
-    v1 : IComparable, v2 : IComparable,
+    v1 : IComparableTypeHint, v2 : IComparableTypeHint,
     u1 : SizeUnit, u2 : SizeUnit,
     operator : Callable[[Any, Any], bool]
 ):

@@ -11,4 +11,4 @@ def test(
     method : CRC16Type,
     crc : int,
 ):
-    assert crc_16(bytearray.fromhex(array), method) == crc
+    assert crc_16(bytes.fromhex(array), method) == crc

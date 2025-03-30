@@ -1,4 +1,6 @@
-from typing import Any, Protocol, runtime_checkable
+from typing import Annotated, Any, Protocol, runtime_checkable
+
+from ..Validation import create_validator
 
 @runtime_checkable
 class IComparable(Protocol):
@@ -6,3 +8,7 @@ class IComparable(Protocol):
     def __ge__(self, other : Any, /) -> bool: ...
     def __lt__(self, other : Any, /) -> bool: ...
     def __le__(self, other : Any, /) -> bool: ...
+
+IComparableValidator = create_validator(IComparable)
+
+type IComparableTypeHint = Annotated[Any, IComparableValidator]

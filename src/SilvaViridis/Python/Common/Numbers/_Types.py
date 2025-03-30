@@ -1,7 +1,6 @@
-from collections.abc import Sequence
 from typing import Annotated
 
-from ..Validators import (
+from ._Validators import (
     Int8Validator,
     Int16Validator,
     Int32Validator,
@@ -14,9 +13,8 @@ from ..Validators import (
     UInt128Validator,
     PositiveIntValidator,
     NonNegativeIntValidator,
+    NonPositiveIntValidator,
     NegativeIntValidator,
-    NonEmptyStringValidator,
-    NonEmptySequenceValidator,
 )
 
 type Int8 = Annotated[int, Int8Validator]
@@ -33,7 +31,5 @@ type UInt128 = Annotated[int, UInt128Validator]
 
 type PositiveInt = Annotated[int, PositiveIntValidator]
 type NonNegativeInt = Annotated[int, NonNegativeIntValidator]
+type NonPositiveInt = Annotated[int, NonPositiveIntValidator]
 type NegativeInt = Annotated[int, NegativeIntValidator]
-
-type NonEmptyString = Annotated[str, NonEmptyStringValidator]
-type NonEmptySequence[T] = Annotated[Sequence[T], NonEmptySequenceValidator]

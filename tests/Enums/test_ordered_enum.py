@@ -6,7 +6,7 @@ from enum import Enum
 from itertools import product
 from typing import Any
 
-from SilvaViridis.Python.Common.Interfaces import IComparable
+from SilvaViridis.Python.Common.Interfaces import IComparableTypeHint
 
 from SilvaViridis.Python.Common.Enums import (
     OrderedEnum,
@@ -30,10 +30,10 @@ class comparator_type(Enum):
     p_name = 2
     p_value = 3
 
-def create_comparator(t : comparator_type) -> tuple[type[OrderedEnum], Callable[[str], IComparable]]:
+def create_comparator(t : comparator_type) -> tuple[type[OrderedEnum], Callable[[str], IComparableTypeHint]]:
     oe = OrderedEnum("OrderedEnumTest", OE_values_dict)
-    order : Mapping[oe, IComparable] = {getattr(oe, k): v for k, v in OE_order_dict.items()}
-    order_func : Callable[[str], IComparable]
+    order : Mapping[oe, IComparableTypeHint] = {getattr(oe, k): v for k, v in OE_order_dict.items()}
+    order_func : Callable[[str], IComparableTypeHint]
 
     if t is comparator_type.dict:
         OrderedEnumDictComparator(order)(oe)
@@ -60,7 +60,7 @@ OE_comparators = [
 @pytest.mark.parametrize("left,right", OE_pairs)
 @pytest.mark.parametrize("operator", OE_operators)
 def test_eq(
-    comparator : tuple[type[OrderedEnum], Callable[[str], IComparable]],
+    comparator : tuple[type[OrderedEnum], Callable[[str], IComparableTypeHint]],
     left : str,
     right : str,
     operator : Callable[[Any, Any], bool],
@@ -71,7 +71,7 @@ def test_eq(
 @pytest.mark.parametrize("comparator", OE_comparators)
 @pytest.mark.parametrize("value", OE_items)
 def test_not_implemented_eq(
-    comparator : tuple[type[OrderedEnum], Callable[[str], IComparable]],
+    comparator : tuple[type[OrderedEnum], Callable[[str], IComparableTypeHint]],
     value : str,
 ):
     d, _ = comparator
@@ -80,7 +80,7 @@ def test_not_implemented_eq(
 @pytest.mark.parametrize("comparator", OE_comparators)
 @pytest.mark.parametrize("value", OE_items)
 def test_not_implemented_ne(
-    comparator : tuple[type[OrderedEnum], Callable[[str], IComparable]],
+    comparator : tuple[type[OrderedEnum], Callable[[str], IComparableTypeHint]],
     value : str,
 ):
     d, _ = comparator
@@ -91,7 +91,7 @@ def test_not_implemented_ne(
 @pytest.mark.parametrize("value", OE_items)
 @pytest.mark.parametrize("operator", OE_operators[2:])
 def test_not_implemented_other(
-    comparator : tuple[type[OrderedEnum], Callable[[str], IComparable]],
+    comparator : tuple[type[OrderedEnum], Callable[[str], IComparableTypeHint]],
     value : str,
     operator : Callable[[Any, Any], bool],
 ):
@@ -103,7 +103,7 @@ def test_not_implemented_other(
 @pytest.mark.parametrize("value", OE_items)
 @pytest.mark.parametrize("operator", OE_operators[2:])
 def test_not_in_dict(
-    comparator : tuple[type[OrderedEnum], Callable[[str], IComparable]],
+    comparator : tuple[type[OrderedEnum], Callable[[str], IComparableTypeHint]],
     value : str,
     operator : Callable[[Any, Any], bool],
 ):

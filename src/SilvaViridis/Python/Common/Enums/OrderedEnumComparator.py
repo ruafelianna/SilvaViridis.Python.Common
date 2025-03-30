@@ -1,9 +1,11 @@
 from collections.abc import Callable
 from functools import total_ordering
+from pydantic import validate_call
 from typing import Any
 
 from .OrderedEnum import OrderedEnum
 
+@validate_call
 def OrderedEnumComparator[TEnum : OrderedEnum](
     compare : Callable[[TEnum, TEnum], bool],
 ) -> Callable[[type[TEnum]], type[TEnum]]:

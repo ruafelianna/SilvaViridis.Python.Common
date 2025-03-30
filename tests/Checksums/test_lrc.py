@@ -10,4 +10,4 @@ def test(
     array : str,
     checksum : int,
 ):
-    assert lrc(bytearray.fromhex(array)) == checksum
+    assert lrc(bytes.fromhex(array)) == checksum
