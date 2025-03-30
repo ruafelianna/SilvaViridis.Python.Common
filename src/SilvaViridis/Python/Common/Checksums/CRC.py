@@ -10,7 +10,7 @@ def crc_16(
 ) -> int:
     if crc_type == CRC16Type.modbus_rtu:
         return modbus_rtu(data)
-    return NotImplemented
+    return NotImplemented # pragma: no cover
 
 @validate_call
 def modbus_rtu(

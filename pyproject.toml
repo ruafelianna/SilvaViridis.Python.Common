@@ -1,6 +1,6 @@
 [project]
 name = "SilvaViridis.Python.Common"
-version = "0.7.2"
+version = "0.8.0"
 description = "Useful tools for python projects."
 authors = [
     {name = "Maria Sorokina", email = "ruafelianna@ya.ru"},
@@ -31,24 +31,18 @@ test = [
 ]
 
 [tool.pdm.scripts]
-clean = """
-sh -c ' \\
-    rm -rf .pdm-build dist .pytest_cache .coverage htmlcov \\
-    ; find . -type d -name __pycache__ -exec rm -rf {} + \\
-'
+clean.shell = """
+rm -rf .pdm-build dist .pytest_cache .coverage htmlcov \\
+    ; find . -type d -name __pycache__ -exec rm -rf {} +
 """
-build = """
-sh -c ' \\
-    pdm install -d \\
+build.shell = """
+pdm install -d \\
     && pdm run pyright \\
     && pdm run pytest --suppress-no-test-exit-code \\
-    && pdm build \\
-'
+    && pdm build
 """
-test = """
-sh -c ' \\
-    pdm run coverage run -m pytest -s \\
-    && pdm run coverage html \\
-'\\
-"""
+test.composite = [
+    "pdm run coverage run -m pytest -rsfEX {args}",
+    "pdm run coverage html",
+]
 update_lock = "pdm lock -G:all"

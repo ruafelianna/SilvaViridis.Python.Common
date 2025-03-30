@@ -2,10 +2,11 @@ import pytest
 
 from SilvaViridis.Python.Common.Checksums import lrc
 
-@pytest.mark.parametrize("array,checksum", [
-    ("01 03 00 00 00 01", 0xfb),
-    ("01 03 02 ab cd", 0x82),
-])
+from .fixtures import data_list, lrc_checksums
+
+all_data = list(map(lambda d, c: (d, c), data_list, lrc_checksums))
+
+@pytest.mark.parametrize("array,checksum", all_data)
 def test(
     array : str,
     checksum : int,
