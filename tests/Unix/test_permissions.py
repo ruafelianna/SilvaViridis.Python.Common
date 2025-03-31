@@ -9,6 +9,12 @@ all_combinations = product([p for p in Permission], repeat = 3)
 all_combinations_numbered = list(enumerate(all_combinations))
 
 @pytest.mark.parametrize("triplet", all_combinations_numbered)
+def test_create(triplet : tuple[int, tuple[Permission, Permission, Permission]]):
+    _, (owner, group, other) = triplet
+    up = UnixPermission(owner, group, other)
+    assert (up.owner, up.group, up.other) == (owner, group, other)
+
+@pytest.mark.parametrize("triplet", all_combinations_numbered)
 def test_octal(triplet : tuple[int, tuple[Permission, Permission, Permission]]):
     index, (owner, group, other) = triplet
     assert UnixPermission(owner, group, other).as_octal() == f"{index:03o}"
