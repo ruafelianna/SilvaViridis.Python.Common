@@ -1,5 +1,8 @@
 from functools import reduce
 from pydantic import validate_call
+from typing import Annotated, Any
+
+from SilvaViridis.Python.Common.Validation import create_validator
 
 from .Permission import Permission
 
@@ -76,3 +79,7 @@ class UnixPermission:
             acc[0] + elem[0],
             Permission(acc[1].value | elem[1].value)
         )
+
+UnixPermissionValidator = create_validator(UnixPermission)
+
+type UnixPermissionTypeHint = Annotated[Any, UnixPermissionValidator]
