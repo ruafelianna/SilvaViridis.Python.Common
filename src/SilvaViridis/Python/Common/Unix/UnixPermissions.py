@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict, validate_call
 from .PermissionLevel import PermissionLevel
 
 class UnixPermissions(BaseModel):
-    owner : PermissionLevel
+    user : PermissionLevel
     group : PermissionLevel
     other : PermissionLevel
 
@@ -14,7 +14,7 @@ class UnixPermissions(BaseModel):
     def as_octal(
         self,
     ) -> str:
-        return f"{self.owner.value}{self.group.value}{self.other.value}"
+        return f"{self.user.value}{self.group.value}{self.other.value}"
 
     @validate_call
     def as_chmod(
@@ -24,7 +24,7 @@ class UnixPermissions(BaseModel):
         result = reduce(
             self._sum,
             (
-                self._get_permission("u", self.owner),
+                self._get_permission("u", self.user),
                 self._get_permission("g", self.group),
                 self._get_permission("o", self.other),
             ),

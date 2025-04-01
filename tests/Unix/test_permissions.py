@@ -10,20 +10,20 @@ all_combinations_numbered = list(enumerate(all_combinations))
 
 @pytest.mark.parametrize("triplet", all_combinations_numbered)
 def test_create(triplet : tuple[int, tuple[PermissionLevel, PermissionLevel, PermissionLevel]]):
-    _, (owner, group, other) = triplet
-    up = UnixPermissions(owner = owner, group = group, other = other)
-    assert (up.owner, up.group, up.other) == (owner, group, other)
+    _, (user, group, other) = triplet
+    up = UnixPermissions(user = user, group = group, other = other)
+    assert (up.user, up.group, up.other) == (user, group, other)
 
 @pytest.mark.parametrize("triplet", all_combinations_numbered)
 def test_octal(triplet : tuple[int, tuple[PermissionLevel, PermissionLevel, PermissionLevel]]):
-    index, (owner, group, other) = triplet
-    assert UnixPermissions(owner = owner, group = group, other = other).as_octal() == f"{index:03o}"
+    index, (user, group, other) = triplet
+    assert UnixPermissions(user = user, group = group, other = other).as_octal() == f"{index:03o}"
 
 @pytest.mark.parametrize("triplet", all_combinations_numbered)
 @pytest.mark.parametrize("turn_on", [True, False])
 def test_chmod(triplet : tuple[int, tuple[PermissionLevel, PermissionLevel, PermissionLevel]], turn_on : bool):
-    index, (owner, group, other) = triplet
-    user_group = ("" if owner == PermissionLevel.none else "u") \
+    index, (user, group, other) = triplet
+    user_group = ("" if user == PermissionLevel.none else "u") \
         + ("" if group == PermissionLevel.none else "g") \
         + ("" if other == PermissionLevel.none else "o")
     sign = "+" if turn_on else "-"
@@ -37,4 +37,4 @@ def test_chmod(triplet : tuple[int, tuple[PermissionLevel, PermissionLevel, Perm
             )
         )
     )
-    assert UnixPermissions(owner = owner, group = group, other = other).as_chmod(turn_on) == f"{user_group}{sign}{result.name}"
+    assert UnixPermissions(user = user, group = group, other = other).as_chmod(turn_on) == f"{user_group}{sign}{result.name}"
