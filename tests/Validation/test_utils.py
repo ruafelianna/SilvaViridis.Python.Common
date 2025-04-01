@@ -4,7 +4,7 @@ from pydantic import validate_call
 from typing import Annotated, Any
 
 from SilvaViridis.Python.Common.Interfaces import IComparable
-from SilvaViridis.Python.Common.Validation import create_validator
+from SilvaViridis.Python.Common.Validation import create_validator__is_instance
 
 data_non_strict = [
     (5, (IComparable,)),
@@ -32,14 +32,14 @@ data_strict_fail = [
 @pytest.mark.parametrize("value,check_type", data_non_strict)
 def test_create_validator_instance_non_strict(value : Any, check_type : tuple[type, ...]):
     @validate_call
-    def func(v : Annotated[Any, create_validator(*check_type)]):
+    def func(v : Annotated[Any, create_validator__is_instance(check_type)]):
         pass
     func(value)
 
 @pytest.mark.parametrize("value,check_type", data_strict)
 def test_create_validator_instance_strict(value : Any, check_type : tuple[type, ...]):
     @validate_call
-    def func(v : Annotated[Any, create_validator(*check_type, strict = True)]):
+    def func(v : Annotated[Any, create_validator__is_instance(check_type, strict = True)]):
         pass
     func(value)
 
@@ -47,7 +47,7 @@ def test_create_validator_instance_strict(value : Any, check_type : tuple[type, 
 @pytest.mark.parametrize("value,check_type", data_non_strict_fail)
 def test_create_validator_instance_non_strict_fail(value : Any, check_type : tuple[type, ...]):
     @validate_call
-    def func(v : Annotated[Any, create_validator(*check_type)]):
+    def func(v : Annotated[Any, create_validator__is_instance(check_type)]):
         pass # pragma: no cover
     func(value)
 
@@ -55,6 +55,6 @@ def test_create_validator_instance_non_strict_fail(value : Any, check_type : tup
 @pytest.mark.parametrize("value,check_type", data_strict_fail)
 def test_create_validator_instance_strict_fail(value : Any, check_type : tuple[type, ...]):
     @validate_call
-    def func(v : Annotated[Any, create_validator(*check_type, strict = True)]):
+    def func(v : Annotated[Any, create_validator__is_instance(check_type, strict = True)]):
         pass # pragma: no cover
     func(value)

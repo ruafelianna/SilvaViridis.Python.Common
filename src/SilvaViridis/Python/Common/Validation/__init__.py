@@ -1,6 +1,5 @@
 from ._Utils import (
     CheckMode,
-    create_validator,
     create_validator__is_instance,
     create_validator__has_attributes,
     create_validator__implements_magic_methods,
@@ -10,7 +9,6 @@ from ._Utils import (
 
 __all__ = [
     "CheckMode",
-    "create_validator",
     "create_validator__is_instance",
     "create_validator__has_attributes",
     "create_validator__implements_magic_methods",
