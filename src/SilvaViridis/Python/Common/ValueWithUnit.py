@@ -1,4 +1,5 @@
 from functools import total_ordering
+from pydantic import validate_call
 from typing import Any
 
 from .Enums import OrderedEnum
@@ -6,6 +7,7 @@ from .Interfaces import IComparableTypeHint
 
 @total_ordering
 class ValueWithUnit[TValue : IComparableTypeHint, TUnit : OrderedEnum]:
+    @validate_call
     def __init__(
         self,
         value : TValue,

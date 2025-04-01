@@ -9,6 +9,7 @@ from ..Interfaces import IComparableTypeHint
 def OrderedEnumDictComparator[TEnum : OrderedEnum](
     order : Mapping[TEnum, IComparableTypeHint],
 ) -> Callable[[type[TEnum]], type[TEnum]]:
+    @validate_call
     def compare(
         self : TEnum,
         other : TEnum,

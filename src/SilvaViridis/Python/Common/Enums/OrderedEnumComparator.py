@@ -9,6 +9,7 @@ from .OrderedEnum import OrderedEnum
 def OrderedEnumComparator[TEnum : OrderedEnum](
     compare : Callable[[TEnum, TEnum], bool],
 ) -> Callable[[type[TEnum]], type[TEnum]]:
+    @validate_call
     def decorator(
         cls : type[TEnum],
     ) -> type[TEnum]:

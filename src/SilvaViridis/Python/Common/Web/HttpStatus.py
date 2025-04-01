@@ -1,4 +1,5 @@
 from enum import Enum
+from pydantic import validate_call
 
 from .HttpStatusGroup import HttpStatusGroup
 
@@ -67,31 +68,37 @@ class HttpStatus(Enum):
     NotExtended = 510
     NetworkAuthenticationRequired = 511
 
+    @validate_call
     def get_group(
         self,
     ) -> HttpStatusGroup:
         return HttpStatusGroup(self.value // 100)
 
+    @validate_call
     def is_information(
         self,
     ) -> bool:
         return self.get_group() == HttpStatusGroup.information
 
+    @validate_call
     def is_success(
         self,
     ) -> bool:
         return self.get_group() == HttpStatusGroup.success
 
+    @validate_call
     def is_redirect(
         self,
     ) -> bool:
         return self.get_group() == HttpStatusGroup.redirect
 
+    @validate_call
     def is_client_error(
         self,
     ) -> bool:
         return self.get_group() == HttpStatusGroup.client_error
 
+    @validate_call
     def is_server_error(
         self,
     ) -> bool:

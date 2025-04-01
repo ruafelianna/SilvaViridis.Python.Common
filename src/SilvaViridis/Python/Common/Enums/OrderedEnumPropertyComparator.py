@@ -8,6 +8,7 @@ from .OrderedEnumComparator import OrderedEnumComparator
 def OrderedEnumPropertyComparator[TEnum : OrderedEnum](
     attr : str,
 ) -> Callable[[type[TEnum]], type[TEnum]]:
+    @validate_call
     def compare(
         self : TEnum,
         other : TEnum,
