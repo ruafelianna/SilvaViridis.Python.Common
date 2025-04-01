@@ -11,13 +11,13 @@ all_combinations_numbered = list(enumerate(all_combinations))
 @pytest.mark.parametrize("triplet", all_combinations_numbered)
 def test_create(triplet : tuple[int, tuple[Permission, Permission, Permission]]):
     _, (owner, group, other) = triplet
-    up = UnixPermission(owner, group, other)
+    up = UnixPermission(owner = owner, group = group, other = other)
     assert (up.owner, up.group, up.other) == (owner, group, other)
 
 @pytest.mark.parametrize("triplet", all_combinations_numbered)
 def test_octal(triplet : tuple[int, tuple[Permission, Permission, Permission]]):
     index, (owner, group, other) = triplet
-    assert UnixPermission(owner, group, other).as_octal() == f"{index:03o}"
+    assert UnixPermission(owner = owner, group = group, other = other).as_octal() == f"{index:03o}"
 
 @pytest.mark.parametrize("triplet", all_combinations_numbered)
 @pytest.mark.parametrize("turn_on", [True, False])
@@ -37,4 +37,4 @@ def test_chmod(triplet : tuple[int, tuple[Permission, Permission, Permission]], 
             )
         )
     )
-    assert UnixPermission(owner, group, other).as_chmod(turn_on) == f"{user_group}{sign}{result.name}"
+    assert UnixPermission(owner = owner, group = group, other = other).as_chmod(turn_on) == f"{user_group}{sign}{result.name}"

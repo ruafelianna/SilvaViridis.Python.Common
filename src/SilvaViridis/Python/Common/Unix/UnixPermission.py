@@ -1,40 +1,14 @@
 from functools import reduce
-from pydantic import validate_call
-from typing import Annotated, Any
-
-from SilvaViridis.Python.Common.Validation import create_validator
+from pydantic import BaseModel, ConfigDict, validate_call
 
 from .Permission import Permission
 
-class UnixPermission:
-    @validate_call
-    def __init__(
-        self,
-        owner : Permission,
-        group : Permission,
-        other : Permission,
-    ):
-        self._owner = owner
-        self._group = group
-        self._other = other
+class UnixPermission(BaseModel):
+    owner : Permission
+    group : Permission
+    other : Permission
 
-    @property
-    def owner(
-        self,
-    ) -> Permission:
-        return self._owner
-
-    @property
-    def group(
-        self,
-    ) -> Permission:
-        return self._group
-
-    @property
-    def other(
-        self,
-    ) -> Permission:
-        return self._other
+    model_config = ConfigDict(frozen = True)
 
     @validate_call
     def as_octal(
@@ -79,7 +53,3 @@ class UnixPermission:
             acc[0] + elem[0],
             Permission(acc[1].value | elem[1].value)
         )
-
-UnixPermissionValidator = create_validator(UnixPermission)
-
-type UnixPermissionTypeHint = Annotated[Any, UnixPermissionValidator]
