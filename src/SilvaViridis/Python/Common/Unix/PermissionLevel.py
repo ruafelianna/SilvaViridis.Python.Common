@@ -1,6 +1,6 @@
 from enum import Enum
 
-class Permission(Enum):
+class PermissionLevel(Enum):
     none = 0
     x = 1
     w = 2

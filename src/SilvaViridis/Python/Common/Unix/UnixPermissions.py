@@ -1,12 +1,12 @@
 from functools import reduce
 from pydantic import BaseModel, ConfigDict, validate_call
 
-from .Permission import Permission
+from .PermissionLevel import PermissionLevel
 
-class UnixPermission(BaseModel):
-    owner : Permission
-    group : Permission
-    other : Permission
+class UnixPermissions(BaseModel):
+    owner : PermissionLevel
+    group : PermissionLevel
+    other : PermissionLevel
 
     model_config = ConfigDict(frozen = True)
 
@@ -28,7 +28,7 @@ class UnixPermission(BaseModel):
                 self._get_permission("g", self.group),
                 self._get_permission("o", self.other),
             ),
-            ("", Permission.none),
+            ("", PermissionLevel.none),
         )
         sign = "+" if turn_on else "-"
         return f"{result[0]}{sign}{result[1].name}"
@@ -37,19 +37,19 @@ class UnixPermission(BaseModel):
     @validate_call
     def _get_permission(
         user_group : str,
-        permission : Permission,
-    ) -> tuple[str, Permission]:
-        if permission == Permission.none:
-            return ("", Permission.none)
+        permission : PermissionLevel,
+    ) -> tuple[str, PermissionLevel]:
+        if permission == PermissionLevel.none:
+            return ("", PermissionLevel.none)
         return (user_group, permission)
 
     @staticmethod
     @validate_call
     def _sum(
-        acc : tuple[str, Permission],
-        elem : tuple[str, Permission],
-    ) -> tuple[str, Permission]:
+        acc : tuple[str, PermissionLevel],
+        elem : tuple[str, PermissionLevel],
+    ) -> tuple[str, PermissionLevel]:
         return (
             acc[0] + elem[0],
-            Permission(acc[1].value | elem[1].value)
+            PermissionLevel(acc[1].value | elem[1].value)
         )

@@ -1,7 +1,7 @@
-from .Permission import Permission
-from .UnixPermission import UnixPermission
+from .PermissionLevel import PermissionLevel
+from .UnixPermissions import UnixPermissions
 
 __all__ = [
-    "Permission",
-    "UnixPermission",
+    "PermissionLevel",
+    "UnixPermissions",
 ]
