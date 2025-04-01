@@ -50,33 +50,33 @@ def test_op(
     u1 : SizeUnit, u2 : SizeUnit,
     operator : Callable[[Any, Any], bool]
 ):
-    left = VwU(v1, u1)
-    right = VwU(v2, u2)
+    left = VwU(value = v1, unit = u1)
+    right = VwU(value = v2, unit = u2)
     assert operator(left, right) == OE_operators_dict[operator](left, right)
 
 @pytest.mark.parametrize("unit", OE_units)
 def test_str(
     unit : SizeUnit,
 ):
-    assert str(VwU(1024, unit)) == f"1024{unit.value}"
+    assert str(VwU(value = 1024, unit = unit)) == f"1024{unit.value}"
 
 @pytest.mark.parametrize("unit", OE_units)
 def test_hash(
     unit : SizeUnit,
 ):
-    assert hash(VwU(1024, unit)) == hash((1024, unit))
+    assert hash(VwU(value = 1024, unit = unit)) == hash((1024, unit))
 
 @pytest.mark.parametrize("unit", OE_units)
 def test_not_implemented_eq(
     unit : SizeUnit,
 ):
-    assert not (VwU(7, unit) == 7)
+    assert not (VwU(value = 7, unit = unit) == 7)
 
 @pytest.mark.parametrize("unit", OE_units)
 def test_not_implemented_ne(
     unit : SizeUnit,
 ):
-    assert VwU(7, unit) != 7
+    assert VwU(value = 7, unit = unit) != 7
 
 @pytest.mark.xfail(raises = TypeError)
 @pytest.mark.parametrize("unit", OE_units)
@@ -85,4 +85,4 @@ def test_not_implemented_other(
     unit : SizeUnit,
     operator : Callable[[Any, Any], bool],
 ):
-    assert operator(VwU(7, unit), 7)
+    assert operator(VwU(value = 7, unit = unit), 7)

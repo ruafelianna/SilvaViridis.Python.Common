@@ -1,32 +1,16 @@
 from functools import total_ordering
-from pydantic import validate_call
+from pydantic import BaseModel, ConfigDict
 from typing import Any
 
 from .Enums import OrderedEnum
 from .Interfaces import IComparableTypeHint
 
 @total_ordering
-class ValueWithUnit[TValue : IComparableTypeHint, TUnit : OrderedEnum]:
-    @validate_call
-    def __init__(
-        self,
-        value : TValue,
-        unit : TUnit,
-    ):
-        self._value = value
-        self._unit = unit
+class ValueWithUnit[TValue : IComparableTypeHint, TUnit : OrderedEnum](BaseModel):
+    value : TValue
+    unit : TUnit
 
-    @property
-    def value(
-        self,
-    ) -> TValue:
-        return self._value
-
-    @property
-    def unit(
-        self,
-    ) -> TUnit:
-        return self._unit
+    model_config = ConfigDict(frozen = True)
 
     def __str__(
         self,
@@ -36,18 +20,17 @@ class ValueWithUnit[TValue : IComparableTypeHint, TUnit : OrderedEnum]:
     def __hash__(
         self,
     ) -> int:
-        return hash((self._value, self._unit))
+        return hash((self.value, self.unit))
 
     def __eq__(
         self,
         other : Any,
     ) -> bool:
-        if isinstance(other, type(self)):
-            return (
-                self.value == other.value
-                and self.unit == other.unit
-            )
-        return NotImplemented
+        return (
+            isinstance(other, type(self))
+            and self.value == other.value
+            and self.unit == other.unit
+        )
 
     def __gt__(
         self,
