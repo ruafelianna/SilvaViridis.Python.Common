@@ -1,6 +1,7 @@
 from collections.abc import  Callable
 from enum import Enum
 from pydantic import AfterValidator, validate_call
+from typing import Any
 
 from SilvaViridis.Python.Common.Collections import NonEmptySequence
 from SilvaViridis.Python.Common.Text import NonEmptyString
@@ -77,9 +78,11 @@ def create_validator__has_attributes(
             attrs,
             check_has_attr,
             mode,
-            "The object doesn't contain all required attributes",
+            f"The object of type = {type(value)}, value = {repr(value)} doesn't contain {mode.name} of the required attributes: {attrs}",
         )
     return AfterValidator(validate)
+
+object_magic_methods_cache : dict[str, Any | None] = {}
 
 @validate_call
 def create_validator__implements_magic_methods(
@@ -90,14 +93,16 @@ def create_validator__implements_magic_methods(
     def validate[T](value : T) -> T:
         @validate_call
         def check_magic_methods(obj : T, elem : str):
-            method = getattr(obj, elem, None)
-            return method is not None and method != getattr(object, elem, None)
+            if elem not in object_magic_methods_cache:
+                object_magic_methods_cache[elem] = getattr(object, elem, None)
+            method = getattr(type(obj), elem, None)
+            return method is not None and method != object_magic_methods_cache[elem]
 
         return validate_all_or_any(
             value,
             methods,
             check_magic_methods,
             mode,
-            "The object doesn't implement all required magic methods",
+            f"The object of type = {type(value)}, value = {repr(value)} doesn't implement {mode.name} of the required magic methods: {methods}",
         )
     return AfterValidator(validate)
