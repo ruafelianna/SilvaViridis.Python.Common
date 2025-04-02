@@ -1,3 +1,5 @@
+![Github Actions](https://github.com/ruafelianna/SilvaViridis.Python.Common/workflows/Build/badge.svg)
+
 # SilvaViridis.Python.Common
 
 Useful tools for python projects.
