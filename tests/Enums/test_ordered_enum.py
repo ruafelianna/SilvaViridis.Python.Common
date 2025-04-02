@@ -6,15 +6,8 @@ from enum import Enum
 from itertools import product
 from typing import Any
 
+from SilvaViridis.Python.Common.Enums import OrderedEnum, OrderedEnumDecorators
 from SilvaViridis.Python.Common.Interfaces import IComparableTypeHint
-
-from SilvaViridis.Python.Common.Enums import (
-    OrderedEnum,
-    OrderedEnumDictComparator,
-    OrderedEnumGetDictComparator,
-    OrderedEnumNameComparator,
-    OrderedEnumValueComparator,
-)
 
 OE_items = ["s1", "s2", "s3", "s4", "s5"]
 OE_pairs = product(OE_items, repeat = 2)
@@ -36,16 +29,16 @@ def create_comparator(t : comparator_type) -> tuple[type[OrderedEnum], Callable[
     order_func : Callable[[str], IComparableTypeHint]
 
     if t is comparator_type.dict:
-        OrderedEnumDictComparator(order)(oe)
+        OrderedEnumDecorators.DictComparator(order)(oe)
         order_func = lambda name, o=OE_order_dict: o[name]
     elif t is comparator_type.get_dict:
-        OrderedEnumGetDictComparator(lambda: order)(oe)
+        OrderedEnumDecorators.GetDictComparator(lambda: order)(oe)
         order_func = lambda name, o=OE_order_dict: o[name]
     elif t is comparator_type.p_name:
-        OrderedEnumNameComparator(oe)
+        OrderedEnumDecorators.NameComparator(oe)
         order_func = lambda name: name
     elif t is comparator_type.p_value:
-        OrderedEnumValueComparator(oe)
+        OrderedEnumDecorators.ValueComparator(oe)
         order_func = lambda name: OE_values_dict[name]
     return oe, order_func
 

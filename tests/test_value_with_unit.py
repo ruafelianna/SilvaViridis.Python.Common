@@ -6,12 +6,8 @@ from itertools import product
 from typing import Any
 
 from SilvaViridis.Python.Common import ValueWithUnit as VwU
+from SilvaViridis.Python.Common.Enums import OrderedEnum, OrderedEnumDecorators
 from SilvaViridis.Python.Common.Interfaces import IComparable
-
-from SilvaViridis.Python.Common.Enums import (
-    OrderedEnum,
-    OrderedEnumDictComparator,
-)
 
 class SizeUnit(OrderedEnum):
     b = ""
@@ -26,7 +22,7 @@ order = {
     SizeUnit.gb: 3,
 }
 
-OrderedEnumDictComparator(order)(SizeUnit)
+OrderedEnumDecorators.DictComparator(order)(SizeUnit)
 
 OE_value_pairs = [(1, 1), (1, 2), (2, 1)]
 OE_units = list(SizeUnit)
