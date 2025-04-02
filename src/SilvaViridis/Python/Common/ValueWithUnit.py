@@ -1,16 +1,19 @@
 from functools import total_ordering
 from pydantic import BaseModel, ConfigDict
-from typing import Any
+from typing import Annotated, Any
 
 from .Enums import OrderedEnum
-from .Interfaces import IComparableTypeHint
+from .Interfaces import IComparable, IComparableValidator
 
 @total_ordering
-class ValueWithUnit[TValue : IComparableTypeHint, TUnit : OrderedEnum](BaseModel):
-    value : TValue
+class ValueWithUnit[TValue : IComparable, TUnit : OrderedEnum](BaseModel):
+    value : Annotated[TValue, IComparableValidator]
     unit : TUnit
 
-    model_config = ConfigDict(frozen = True)
+    model_config = ConfigDict(
+        arbitrary_types_allowed = True,
+        frozen = True,
+    )
 
     def __str__(
         self,
