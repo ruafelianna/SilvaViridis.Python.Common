@@ -1,6 +1,6 @@
 import pytest
 
-from pydantic import validate_call
+from pydantic import ValidationError, validate_call
 from typing import Annotated, Any
 
 from SilvaViridis.Python.Common.Interfaces import IComparable
@@ -30,30 +30,30 @@ data_strict_fail = [
 ]
 
 @pytest.mark.parametrize("value,check_type", data_non_strict)
-def test_create_validator_instance_non_strict(value : Any, check_type : tuple[type, ...]):
+def test_non_strict(value : Any, check_type : tuple[type, ...]):
     @validate_call
     def func(v : Annotated[Any, create_validator__is_instance(check_type)]):
         pass
     func(value)
 
 @pytest.mark.parametrize("value,check_type", data_strict)
-def test_create_validator_instance_strict(value : Any, check_type : tuple[type, ...]):
+def test_strict(value : Any, check_type : tuple[type, ...]):
     @validate_call
     def func(v : Annotated[Any, create_validator__is_instance(check_type, strict = True)]):
         pass
     func(value)
 
-@pytest.mark.xfail(raises = ValueError)
+@pytest.mark.xfail(raises = ValidationError)
 @pytest.mark.parametrize("value,check_type", data_non_strict_fail)
-def test_create_validator_instance_non_strict_fail(value : Any, check_type : tuple[type, ...]):
+def test_non_strict_fail(value : Any, check_type : tuple[type, ...]):
     @validate_call
     def func(v : Annotated[Any, create_validator__is_instance(check_type)]):
         pass # pragma: no cover
     func(value)
 
-@pytest.mark.xfail(raises = ValueError)
+@pytest.mark.xfail(raises = ValidationError)
 @pytest.mark.parametrize("value,check_type", data_strict_fail)
-def test_create_validator_instance_strict_fail(value : Any, check_type : tuple[type, ...]):
+def test_strict_fail(value : Any, check_type : tuple[type, ...]):
     @validate_call
     def func(v : Annotated[Any, create_validator__is_instance(check_type, strict = True)]):
         pass # pragma: no cover

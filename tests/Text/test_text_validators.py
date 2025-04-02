@@ -1,6 +1,6 @@
 import pytest
 
-from pydantic import validate_call
+from pydantic import ValidationError, validate_call
 
 from SilvaViridis.Python.Common.Text import NonEmptyString
 
@@ -11,7 +11,7 @@ def test_non_empty_string(value : NonEmptyString):
         pass
     some(value)
 
-@pytest.mark.xfail(raises = ValueError)
+@pytest.mark.xfail(raises = ValidationError)
 @pytest.mark.parametrize("empty", ["", " ", "\n", "\t", None])
 def test_non_empty_string_fail(empty : NonEmptyString):
     @validate_call
